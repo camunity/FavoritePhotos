@@ -8,6 +8,15 @@
 
 #import <Foundation/Foundation.h>
 
-@interface FPDataManager : NSObject
+@protocol FPDataManagerDelegate <NSObject>
 
+@optional
+-(void)getPhotoData:(id)data;
+
+@end
+
+@interface FPDataManager : NSObject
+@property NSURL *photosURL;
+@property (nonatomic, assign) id <FPDataManagerDelegate> delegate;
+- (instancetype)initWithURL;
 @end

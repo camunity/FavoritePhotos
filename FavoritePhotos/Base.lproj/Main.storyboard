@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -80,12 +81,12 @@
                                 <exclude reference="oc9-Te-8Zr"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="BMw-44-R7b"/>
-                                <exclude reference="KO6-l2-NW2"/>
-                                <exclude reference="VaY-0X-NUN"/>
                                 <exclude reference="O4X-F5-mz0"/>
                                 <exclude reference="iYk-AO-9xy"/>
                                 <exclude reference="tZC-IN-qnP"/>
+                                <exclude reference="BMw-44-R7b"/>
+                                <exclude reference="KO6-l2-NW2"/>
+                                <exclude reference="VaY-0X-NUN"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
@@ -95,12 +96,12 @@
                                 <include reference="oc9-Te-8Zr"/>
                             </mask>
                             <mask key="constraints">
-                                <include reference="BMw-44-R7b"/>
-                                <include reference="KO6-l2-NW2"/>
-                                <include reference="VaY-0X-NUN"/>
                                 <include reference="O4X-F5-mz0"/>
                                 <include reference="iYk-AO-9xy"/>
                                 <include reference="tZC-IN-qnP"/>
+                                <include reference="BMw-44-R7b"/>
+                                <include reference="KO6-l2-NW2"/>
+                                <include reference="VaY-0X-NUN"/>
                             </mask>
                         </variation>
                     </view>
@@ -117,6 +118,7 @@
                         <viewControllerLayoutGuide type="bottom" id="CPw-hD-dhM"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="SfP-Vy-ZNq">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="cv2-cf-1iu">

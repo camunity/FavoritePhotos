@@ -27,15 +27,7 @@
         self.instaDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&connectionError];
         self.dataArray = [self.instaDictionary objectForKey:@""];
 
-
-
-
-
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    }];
 }
 
 @end
