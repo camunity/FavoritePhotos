@@ -28,15 +28,15 @@
     self.dataManager.delegate = self; 
     self.pictureArray = [NSMutableArray new];
     self.locationArray = [NSMutableArray new];
-    [self.dataManager giveMeMyArray:@"aliveandfreefilm"];
+    [self.dataManager giveMeMyArray:@"lions"];
+
 }
 
-    self.cities = [NSMutableArray arrayWithObjects:[UIImage imageNamed:@"austin"], [UIImage imageNamed:@"chicago"], [UIImage imageNamed:@"nashville"], [UIImage imageNamed:@"sanFran"], nil];
-    [self setUpCollectionView];
-//based on text field call
+
 -(void)getPhotoData:(NSMutableArray *)data{
     self.pictureArray = data;
     NSLog(@"%li",self.pictureArray.count);
+    [self.collectionView reloadData];
 }
 
 
@@ -48,14 +48,13 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     ImageCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
-    //cell.cellImageView.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[self.pictureArray firstObject]]];
-    cell.cellImageView.image = [self.cities objectAtIndex:indexPath.row];
+    cell.cellImageView.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[self.pictureArray objectAtIndex:indexPath.row]]]];
     return cell;
 }
 
  - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
 
-     return  self.cities.count;
+     return  self.pictureArray.count;
  }
 
 - (void)setUpCollectionView {
