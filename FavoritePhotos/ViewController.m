@@ -8,15 +8,12 @@
 
 #import "ViewController.h"
 #import "ImageCollectionViewCell.h"
+#import "FPDataManager.h"
 
-@interface ViewController ()
-
-@property NSDictionary *masterDictionary;
-@property NSArray *differentPosts;
-@property NSDictionary *individualPosts;
-@property NSDictionary *allPicsOnPosts;
-@property NSDictionary *almostThere;
+@interface ViewController () <FPDataManagerDelegate>
+@property FPDataManager *dataManager;
 @property NSMutableArray *pictureArray;
+@property NSMutableArray *locationArray;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property NSMutableArray *cities;
 
@@ -27,40 +24,27 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.collectionView.delegate = self;
+    self.dataManager = [FPDataManager new];
+    self.dataManager.delegate = self; 
     self.pictureArray = [NSMutableArray new];
-    [self fillUpTheArray:@"aliveandfreefilm"];
-    NSLog(@"%li", self.pictureArray.count);
+    self.locationArray = [NSMutableArray new];
+    [self.dataManager giveMeMyArray:@"aliveandfreefilm"];
+}
 
     self.cities = [NSMutableArray arrayWithObjects:[UIImage imageNamed:@"austin"], [UIImage imageNamed:@"chicago"], [UIImage imageNamed:@"nashville"], [UIImage imageNamed:@"sanFran"], nil];
     [self setUpCollectionView];
+//based on text field call
+-(void)getPhotoData:(NSMutableArray *)data{
+    self.pictureArray = data;
+    NSLog(@"%li",self.pictureArray.count);
 }
 
 
--(void)fillUpTheArray:(NSString *)whatkindoftag
-{
-    NSString *tempstring = [NSString stringWithFormat:@"https://api.instagram.com/v1/tags/%@/media/recent?access_token=414285079.1fb234f.995c050432af47ebbf899f824d393580", whatkindoftag];
-    NSURL *url = [NSURL URLWithString:tempstring];
-    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+-(void)getLocationData:(NSMutableArray *)data{
+    self.locationArray = data;
+    NSLog(@"%li",self.locationArray.count);
 
-    [NSURLConnection sendAsynchronousRequest:request
-                                       queue:[NSOperationQueue mainQueue]
-                           completionHandler:^(NSURLResponse *response,
-                                               NSData *data,
-                                               NSError *connectionError)
-     {
-         self.masterDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&connectionError];
-         self.differentPosts = [self.masterDictionary objectForKey:@"data"];
-         for (NSDictionary *tempDic in self.differentPosts)
-         {
-             self.allPicsOnPosts = [tempDic objectForKey:@"images"];
-             self.almostThere = [self.allPicsOnPosts objectForKey:@"standard_resolution"];
-             NSString *pictureURL = [self.almostThere objectForKey:@"url"];
-             [self.pictureArray addObject:pictureURL];
-             NSLog(@"%li", self.pictureArray.count);
-         }
-     }];
 }
-
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     ImageCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
@@ -81,8 +65,6 @@
     [self.collectionView setPagingEnabled:YES];
 
 }
-
-
 
 
 

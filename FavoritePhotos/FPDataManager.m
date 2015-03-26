@@ -10,32 +10,49 @@
 
 @implementation FPDataManager
 
-- (instancetype)initWithURL{
-    self = [super init];
-    if (self) {
-        self.photosURL = [NSURL URLWithString:@"SOME STRING WILL GO HERE"]; ///;
-    }
+-(void)formattedPhotoData:(NSMutableArray *)pictures{
+    [self.delegate getPhotoData:self.pictureArray];
 
-    return self;
 }
 
-- (void)getDictionaryData {
+-(void)formattedLocationsData:(NSMutableArray *)locations{
+    [self.delegate getLocationData:self.locationArray];
+}
 
-    NSString *urlText = @"SOME BIG STRING";
-    NSURL *url = [NSURL URLWithString:urlText];
+-(void)giveMeMyArray:(NSString *)query
+{
+    self.pictureArray = [NSMutableArray new];
+    self.locationArray = [NSMutableArray new];
+    
+    NSString *tempstring = [NSString stringWithFormat:@"https://api.instagram.com/v1/tags/%@/media/recent?access_token=414285079.1fb234f.995c050432af47ebbf899f824d393580", query];
+    NSURL *url = [NSURL URLWithString:tempstring];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
+
     [NSURLConnection sendAsynchronousRequest:request
                                        queue:[NSOperationQueue mainQueue]
-                           completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+                           completionHandler:^(NSURLResponse *response,
+                                               NSData *data,
+                                               NSError *connectionError)
+     {
+         self.masterDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&connectionError];
+         self.differentPosts = [self.masterDictionary objectForKey:@"data"];
+         for (NSDictionary *individualPosts in self.differentPosts)
+         {
+             self.allPicsOnPosts = [individualPosts objectForKey:@"images"];
+             self.almostThere = [self.allPicsOnPosts objectForKey:@"standard_resolution"];
+             NSString *pictureURL = [self.almostThere objectForKey:@"url"];
+             [self.pictureArray addObject:pictureURL];
 
-                               self.dictionary = [NSJSONSerialization JSONObjectWithData:data
-                                                                                 options:NSJSONReadingAllowFragments
-                                                                                   error:&connectionError];
-                               NSLog(@"Data Received");
-                               [self.delegate getMapData:self.dictionary];
 
-                           }];
-    
+             [self.locationArray addObject: [individualPosts objectForKey:@"location"]];
+
+             NSLog(@"%li", self.pictureArray.count);
+             NSLog(@"%li", self.locationArray.count);
+
+         }
+         [self formattedPhotoData:self.pictureArray];
+         [self formattedLocationsData:self.locationArray];
+     }];
 }
 
 
