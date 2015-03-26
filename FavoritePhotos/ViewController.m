@@ -10,13 +10,27 @@
 
 @interface ViewController ()
 
+@property NSDictionary *instaDictionary;
+@property NSArray *dataArray;
+
 @end
 
 @implementation ViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+
+    NSURL *url = [NSURL URLWithString:@"https://api.instagram.com/v1/tags/lionclaw/media/recent?access_token=414285079.1fb234f.995c050432af47ebbf899f824d393580"];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+
+    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+        self.instaDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&connectionError];
+        self.dataArray = [self.instaDictionary objectForKey:@""];
+
+
+
+
+
 }
 
 - (void)didReceiveMemoryWarning {
