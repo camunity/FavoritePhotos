@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "ImageCollectionViewCell.h"
 
 @interface ViewController ()
 
@@ -17,6 +18,7 @@
 @property NSDictionary *almostThere;
 @property NSMutableArray *pictureArray;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+@property NSMutableArray *cities;
 
 @end
 
@@ -24,10 +26,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.collectionView.delegate = self;
     self.pictureArray = [NSMutableArray new];
     [self fillUpTheArray:@"aliveandfreefilm"];
     NSLog(@"%li", self.pictureArray.count);
 
+    self.cities = [NSMutableArray arrayWithObjects:[UIImage imageNamed:@"austin"], [UIImage imageNamed:@"chicago"], [UIImage imageNamed:@"nashville"], [UIImage imageNamed:@"sanFran"], nil];
+    [self setUpCollectionView];
 }
 
 
@@ -57,24 +62,27 @@
 }
 
 
-
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
-    
+    ImageCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
+    //cell.cellImageView.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[self.pictureArray firstObject]]];
+    cell.cellImageView.image = [self.cities objectAtIndex:indexPath.row];
     return cell;
 }
 
  - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-     return  self.pictureArray.count;
+
+     return  self.cities.count;
  }
 
 - (void)setUpCollectionView {
+
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
-    [flowLayout setScrollDirection:UICollectionViewScrollDirectionHorizontal];
-    [flowLayout setMinimumLineSpacing:0.5];
+    [flowLayout setMinimumLineSpacing:0.1];
     [self.collectionView setPagingEnabled:YES];
-    [self.collectionView setCollectionViewLayout:flowLayout];
+
 }
+
+
 
 
 
