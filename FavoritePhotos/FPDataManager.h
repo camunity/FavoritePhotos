@@ -19,7 +19,7 @@
 @property NSURL *photosURL;
 @property NSMutableArray *pictureArray;
 @property NSMutableArray *locationArray;
-@property NSMutableArray *urlArray;
+@property NSMutableArray *favoritesArray;
 @property NSDictionary *initialDictionary;
 @property NSArray *differentPosts;
 @property NSDictionary *individualPosts;

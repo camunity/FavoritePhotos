@@ -14,7 +14,7 @@
 {
     self.pictureArray = [NSMutableArray new];
     self.locationArray = [NSMutableArray new];
-    self.urlArray = [NSMutableArray new];
+    self.favoritesArray = [NSMutableArray new];
     self.searchQuery = query;
     
     NSString *tempstring = [NSString stringWithFormat:@"https://api.instagram.com/v1/tags/%@/media/recent?access_token=414285079.1fb234f.995c050432af47ebbf899f824d393580", query];

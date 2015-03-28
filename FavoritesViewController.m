@@ -7,8 +7,21 @@
 //
 
 #import "FavoritesViewController.h"
+#import "ImageCollectionViewCell.h"
+#import "FPDataManager.h"
+#import "ViewController.h"
 
 @interface FavoritesViewController ()
+
+<
+UICollectionViewDataSource,
+UICollectionViewDelegate,
+FPDataManagerDelegate
+>
+
+@property ImageCollectionViewCell *cell;
+@property (weak, nonatomic) IBOutlet UICollectionView *favesCollectionView;
+@property FPDataManager *favesManager;
 
 @end
 
@@ -16,22 +29,27 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    self.favesArray = [NSMutableArray new];
+    self.favesCollectionView.delegate = self;
+    self.favesArray = self.dataManager.favoritesArray;
+    NSLog(@"%lu", (unsigned long)self.favesArray.count);
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    ImageCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"FavCell" forIndexPath:indexPath];
+//    cell.cellImageView.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[self.favesArray objectAtIndex:indexPath.row]]]];
+    cell.cellImageView.image = [UIImage imageNamed:@"austin"];
+    return cell;
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    return self.favesArray.count;
 }
-*/
+
+
+
+
 
 @end

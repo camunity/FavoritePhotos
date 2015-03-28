@@ -9,6 +9,7 @@
 #import "ViewController.h"
 #import "ImageCollectionViewCell.h"
 #import "FPDataManager.h"
+#import "FavoritesViewController.h"
 
 @interface ViewController ()
 <
@@ -25,6 +26,8 @@ UITabBarDelegate
 @property NSMutableArray *cities;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property ImageCollectionViewCell *imageViewCell;
+@property (weak, nonatomic) IBOutlet UITabBar *tabBar;
+@property FavoritesViewController *target;
 
 @end
 
@@ -34,11 +37,20 @@ UITabBarDelegate
     [super viewDidLoad];
     self.collectionView.delegate = self;
     self.searchBar.delegate = self;
+    self.tabBar.delegate = self;
     self.dataManager = [FPDataManager new];
     self.dataManager.delegate = self; 
     self.pictureArray = [NSMutableArray new];
     self.locationArray = [NSMutableArray new];
+    self.target = [self.storyboard instantiateViewControllerWithIdentifier:@"FavesID"];
+    self.target.favesArray = [NSMutableArray new];
+    self.target.favesArray = self.dataManager.favoritesArray;
+
+
+
 //    [self.dataManager giveMeMyArray:self.searchBar.text];
+
+
 
 }
 
@@ -82,13 +94,26 @@ UITabBarDelegate
     NSLog(@"You tapped me");
     ImageCollectionViewCell *cell = (ImageCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
     [cell tapToFavorite];
-    [self.dataManager.urlArray addObject:cell];
-    NSLog(@"%lu", self.dataManager.urlArray.count);
+    [self.dataManager.favoritesArray addObject:cell];
+    NSLog(@"%lu", self.dataManager.favoritesArray.count);
 }
 
-//- (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item {
-//    if ()) {
-//        <#statements#>
+
+- (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item {
+    NSLog(@"tapped");
+    if (tabBar.selectedItem == [tabBar.items objectAtIndex:0]) {
+        [self.navigationController pushViewController:self.target animated:YES];
+        self.target.title = @"Favorites";
+        self.target.dataManager = [FPDataManager new];
+        self.target.dataManager = self.dataManager;
+        //[self performSegueWithIdentifier:@"ShowFavesSegue" sender:item];
+    }
+}
+
+//- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+//    if ([segue.identifier isEqualToString:@"ShowFavesSegue"]) {
+//        FavoritesViewController *fvc = segue.destinationViewController;
+//        fvc.favesArray = self.dataManager.favoritesArray;
 //    }
 //}
 

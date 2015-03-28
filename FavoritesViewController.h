@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "FPDataManager.h"
 
 @interface FavoritesViewController : UIViewController
+
+@property NSMutableArray *favesArray;
+@property FPDataManager *dataManager;
 
 @end
