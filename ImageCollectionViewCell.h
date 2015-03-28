@@ -11,7 +11,10 @@
 @interface ImageCollectionViewCell : UICollectionViewCell
 
 @property (weak, nonatomic) IBOutlet UIImageView *cellImageView;
+@property (weak, nonatomic) IBOutlet UILabel *favoritedLabel;
+@property BOOL isFavorite;
 
+- (void)tapToFavorite;
 
 
 @end

@@ -19,11 +19,16 @@
 @property NSURL *photosURL;
 @property NSMutableArray *pictureArray;
 @property NSMutableArray *locationArray;
-@property NSDictionary *masterDictionary;
+@property NSMutableArray *urlArray;
+@property NSDictionary *initialDictionary;
 @property NSArray *differentPosts;
 @property NSDictionary *individualPosts;
 @property NSDictionary *allPicsOnPosts;
 @property NSDictionary *almostThere;
+@property NSDictionary *favoritesMasterDictionary;
+@property NSString *searchQuery;
+
+
 @property (nonatomic, assign) id <FPDataManagerDelegate> delegate;
 -(void)giveMeMyArray:(NSString *)query;
 

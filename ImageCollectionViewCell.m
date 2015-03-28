@@ -7,7 +7,23 @@
 //
 
 #import "ImageCollectionViewCell.h"
+#import "FPDataManager.h"
 
 @implementation ImageCollectionViewCell
+
+
+
+- (void)tapToFavorite {
+
+    self.isFavorite = NO;
+
+    if (self.favoritedLabel == NO) {
+        [self.favoritedLabel setHidden:YES];
+    } else {
+        [self.favoritedLabel setHidden:NO];
+        
+    }
+
+}
 
 @end
