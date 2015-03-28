@@ -94,7 +94,7 @@ UITabBarDelegate
     NSLog(@"You tapped me");
     ImageCollectionViewCell *cell = (ImageCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
     [cell tapToFavorite];
-    [self.dataManager.favoritesArray addObject:cell];
+    [self.dataManager.favoritesArray addObject:cell.cellImageView.image];
     NSLog(@"%lu", self.dataManager.favoritesArray.count);
 }
 
