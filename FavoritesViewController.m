@@ -34,20 +34,21 @@ FPDataManagerDelegate
     self.favesArray = self.dataManager.favoritesArray;
     NSLog(@"%lu", (unsigned long)self.favesArray.count);
 
+
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [self.favesCollectionView reloadData];
     animated = YES;
+
 }
 
 
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     ImageCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
-    UIImage *cellImage = [self.favesArray objectAtIndex:indexPath.row];
-    cell.cellImageView.image = cellImage;
-   //cell.cellImageView.image = [UIImage imageNamed:@"austin"];
+    NSData *cellImage = [self.favesArray objectAtIndex:indexPath.row];
+    cell.cellImageView.image = [UIImage imageWithData:cellImage];
     return cell;
 }
 

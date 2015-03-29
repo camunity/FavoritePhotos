@@ -16,7 +16,7 @@
 -(void)getLocationData:(NSMutableArray *)data;
 @end
 
-@interface FPDataManager : NSObject
+@interface FPDataManager : NSObject //<NSCoding>
 @property NSURL *photosURL;
 @property NSMutableArray *pictureArray;
 @property NSMutableArray *locationArray;
@@ -32,8 +32,11 @@
 
 @property (nonatomic, assign) id <FPDataManagerDelegate> delegate;
 -(void)giveMeMyArray:(NSString *)query;
--(void)addFave:(UIImage *)image;
+-(void)addFave:(NSData *)image;
 -(void)setUpDataManager;
+- (void)load;
+//-(NSString*)createJSON;
+
 
 
 

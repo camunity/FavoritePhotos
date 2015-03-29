@@ -9,7 +9,7 @@
 #import "FPDataManager.h"
 #import <UIKit/UIKit.h>
 
-@implementation FPDataManager
+@implementation FPDataManager 
 
 
 -(void)setUpDataManager{
@@ -61,26 +61,29 @@
 }
 
 
--(void)addFave:(UIImage *) image{
+-(void)addFave:(NSData *) image{
 
     if(!([self.favoritesArray containsObject:image])){
     [self addFavestoDictionary:image];
     NSLog(@"FAVORITED!");
     }
-
+    NSLog(@"dictionary saved");
 }
 
--(void)addFavestoDictionary:(UIImage *) image {
+-(void)addFavestoDictionary:(NSData *) image {
 
-    if([self checkExists:(UIImage *)image]){
+    if([self checkExists:(NSData *)image]){
         NSLog(@"ADDED TO ARRAY!");
     }
     else{
         NSLog(@"We Have To Set Up Another Queue based on new query homie");
+//        NSMutableArray *queryArray = [NSMutableArray new];
+//        [queryArray addObject:image];
         NSDictionary *query = [[NSDictionary alloc] initWithObjectsAndKeys:self.favoritesArray, self.searchQuery, nil];
         [self.favoritesMasterDictionary[@"masterFaves"] addObject:query];
         NSLog(@"%li", [self.favoritesMasterDictionary[@"masterFaves"] count]);
         [self.favoritesArray addObject:image];
+        [self saveDictionary];
 
     }
         NSArray *temp = self.favoritesMasterDictionary[@"masterFaves"];
@@ -88,7 +91,7 @@
         NSLog(@"%li Total Favorite Photos", self.favoritesArray.count);
 }
 
--(bool)checkExists:(UIImage *)image{
+-(bool)checkExists:(NSData *)image{
     for (NSDictionary *dict in self.favoritesMasterDictionary[@"masterFaves"]) {
         if ([dict.allKeys containsObject:self.searchQuery]) {
             NSLog(@"QUERY ALREADY EXISTED ADDING TO ARRAY!");
@@ -99,5 +102,24 @@
     }
         return NO;
 }
+
+
+
+- (NSURL *)documentsDirectory {
+    NSLog(@"%@", [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] firstObject] );
+
+    return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] firstObject];
+}
+
+- (void)saveDictionary {
+    NSURL *plist = [[self documentsDirectory] URLByAppendingPathComponent:@"Favorites.plist"];
+    [self.favoritesMasterDictionary writeToURL:plist atomically:YES];
+}
+
+- (void)load {
+    NSURL *plist = [[self documentsDirectory] URLByAppendingPathComponent:@"Favorites.plist"];
+    self.favoritesMasterDictionary = [NSDictionary dictionaryWithContentsOfURL:plist];
+}
+
 
 @end

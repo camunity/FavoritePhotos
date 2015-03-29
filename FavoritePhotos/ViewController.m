@@ -37,6 +37,8 @@ UITabBarDelegate
     [super viewDidLoad];
     self.collectionView.delegate = self;
     self.searchBar.delegate = self;
+    [[UILabel appearanceWhenContainedIn:[UISearchBar class], nil] setTextColor:[UIColor colorWithRed:0.256 green:0.663 blue:0.759 alpha:1.000]];
+    self.searchBar.searchBarStyle = UISearchBarStyleMinimal;
     self.tabBar.delegate = self;
     self.dataManager = [FPDataManager new];
     self.dataManager.delegate = self;
@@ -46,14 +48,8 @@ UITabBarDelegate
     self.target = [self.storyboard instantiateViewControllerWithIdentifier:@"FavesID"];
     self.target.favesArray = [NSMutableArray new];
     self.target.favesArray = self.dataManager.favoritesArray;
-
-
-
-//    [self.dataManager giveMeMyArray:self.searchBar.text];
-
-
-
 }
+
 
 
 -(void)getPhotoData:(NSMutableArray *)data{
@@ -95,8 +91,10 @@ UITabBarDelegate
     NSLog(@"You tapped me");
     ImageCollectionViewCell *cell = (ImageCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
     [cell tapToFavorite];
-    [self.dataManager addFave:cell.cellImageView.image];
-//    NSLog(@"%lu", self.dataManager.favoritesArray.count);
+    UIImage *cellImage = cell.cellImageView.image;
+    NSData *imageData = UIImagePNGRepresentation(cellImage);
+    [self.dataManager addFave:imageData];
+    //[self save];
 }
 
 
@@ -105,18 +103,13 @@ UITabBarDelegate
     if (tabBar.selectedItem == [tabBar.items objectAtIndex:0]) {
         [self.navigationController pushViewController:self.target animated:YES];
         self.target.title = @"Favorites";
-        self.target.dataManager = [FPDataManager new];
+        [self.target.dataManager setUpDataManager];
         self.target.dataManager = self.dataManager;
         //[self performSegueWithIdentifier:@"ShowFavesSegue" sender:item];
     }
 }
 
-//- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-//    if ([segue.identifier isEqualToString:@"ShowFavesSegue"]) {
-//        FavoritesViewController *fvc = segue.destinationViewController;
-//        fvc.favesArray = self.dataManager.favoritesArray;
-//    }
-//}
+
 
 
 
