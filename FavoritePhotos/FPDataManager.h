@@ -21,8 +21,9 @@
 @property NSMutableArray *pictureArray;
 @property NSMutableArray *locationArray;
 @property NSMutableArray *favoritesArray;
-@property NSDictionary *initialDictionary;
+@property NSMutableArray *arrayWithData;
 @property NSArray *differentPosts;
+@property NSDictionary *initialDictionary;
 @property NSDictionary *individualPosts;
 @property NSDictionary *allPicsOnPosts;
 @property NSDictionary *almostThere;

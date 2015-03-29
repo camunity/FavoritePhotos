@@ -29,6 +29,7 @@ FPDataManagerDelegate
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self.dataManager load];
     self.favesArray = [NSMutableArray new];
     self.favesCollectionView.delegate = self;
     self.favesArray = self.dataManager.favoritesArray;

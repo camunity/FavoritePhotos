@@ -43,6 +43,7 @@ UITabBarDelegate
     self.dataManager = [FPDataManager new];
     self.dataManager.delegate = self;
     [self.dataManager setUpDataManager];
+//    [self.dataManager load];
     self.pictureArray = [NSMutableArray new];
     self.locationArray = [NSMutableArray new];
     self.target = [self.storyboard instantiateViewControllerWithIdentifier:@"FavesID"];
@@ -103,7 +104,7 @@ UITabBarDelegate
     if (tabBar.selectedItem == [tabBar.items objectAtIndex:0]) {
         [self.navigationController pushViewController:self.target animated:YES];
         self.target.title = @"Favorites";
-        [self.target.dataManager setUpDataManager];
+        [self.target.dataManager load];
         self.target.dataManager = self.dataManager;
         //[self performSegueWithIdentifier:@"ShowFavesSegue" sender:item];
     }

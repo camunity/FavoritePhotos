@@ -16,7 +16,7 @@
     self.favoritesArray = [NSMutableArray new];
     self.favoritesMasterDictionary = [NSMutableDictionary new];
     NSMutableArray *masterFavesArray = [NSMutableArray new];
-    [self.favoritesMasterDictionary setValue:masterFavesArray forKey:@"masterFaves" ];
+    [self.favoritesMasterDictionary setValue:masterFavesArray forKey:@"masterFaves"];
 
 }
 
@@ -74,18 +74,19 @@
 
     if([self checkExists:(NSData *)image]){
         NSLog(@"ADDED TO ARRAY!");
-    }
-    else{
-        NSLog(@"We Have To Set Up Another Queue based on new query homie");
-//        NSMutableArray *queryArray = [NSMutableArray new];
-//        [queryArray addObject:image];
-        NSDictionary *query = [[NSDictionary alloc] initWithObjectsAndKeys:self.favoritesArray, self.searchQuery, nil];
-        [self.favoritesMasterDictionary[@"masterFaves"] addObject:query];
-        NSLog(@"%li", [self.favoritesMasterDictionary[@"masterFaves"] count]);
         [self.favoritesArray addObject:image];
-        [self saveDictionary];
 
     }
+    else{
+        [self.favoritesArray addObject:image];
+        NSLog(@"We Have To Set Up Another Queue based on new query homie");
+        NSMutableArray *queryArray = [NSMutableArray new];
+        [queryArray addObject:image];
+        NSDictionary *query = [[NSDictionary alloc] initWithObjectsAndKeys:queryArray, self.searchQuery, nil];
+        [self.favoritesMasterDictionary[@"masterFaves"] addObject:query];
+        NSLog(@"%li", [self.favoritesMasterDictionary[@"masterFaves"] count]);
+    }
+        [self saveDictionary];
         NSArray *temp = self.favoritesMasterDictionary[@"masterFaves"];
         NSLog(@"%li Total Favorited Queries",temp.count);
         NSLog(@"%li Total Favorite Photos", self.favoritesArray.count);
@@ -117,8 +118,32 @@
 }
 
 - (void)load {
+    //grab array and iterate to grab each of the objects in the dictionary's subarray
+    self.favoritesArray = [NSMutableArray new];
+    self.favoritesMasterDictionary = [NSMutableDictionary new];
+    self.arrayWithData = [NSMutableArray new];
+    NSMutableArray *tempArray = [NSMutableArray new];
+
+
+    NSMutableArray *masterFavesArray = [NSMutableArray new];
+    [self.favoritesMasterDictionary setValue:masterFavesArray forKey:@"masterFaves"];
     NSURL *plist = [[self documentsDirectory] URLByAppendingPathComponent:@"Favorites.plist"];
     self.favoritesMasterDictionary = [NSDictionary dictionaryWithContentsOfURL:plist];
+
+    NSArray *tempFavorites = self.favoritesMasterDictionary[@"masterFaves"];
+
+    for (NSDictionary *tempDic in tempFavorites)
+    {
+        tempArray = tempDic.allValues;
+        for (NSArray *tempArray2 in tempArray)
+        {
+            for (NSData *data in tempArray2)
+            {
+                [self.favoritesArray addObject:data];
+            }
+        }
+    }
+           NSLog(@"Loaded!");
 }
 
 
