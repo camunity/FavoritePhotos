@@ -7,16 +7,26 @@
 //
 
 #import "FPDataManager.h"
+#import <UIKit/UIKit.h>
 
 @implementation FPDataManager
+
+
+-(void)setUpDataManager{
+    self.favoritesArray = [NSMutableArray new];
+    self.favoritesMasterDictionary = [NSMutableDictionary new];
+    NSMutableArray *masterFavesArray = [NSMutableArray new];
+    [self.favoritesMasterDictionary setValue:masterFavesArray forKey:@"masterFaves" ];
+
+}
 
 -(void)giveMeMyArray:(NSString *)query
 {
     self.pictureArray = [NSMutableArray new];
     self.locationArray = [NSMutableArray new];
-    self.favoritesArray = [NSMutableArray new];
     self.searchQuery = query;
-    
+
+
     NSString *tempstring = [NSString stringWithFormat:@"https://api.instagram.com/v1/tags/%@/media/recent?access_token=414285079.1fb234f.995c050432af47ebbf899f824d393580", query];
     NSURL *url = [NSURL URLWithString:tempstring];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
@@ -46,16 +56,48 @@
          [self.delegate getPhotoData:self.pictureArray];
          [self.delegate getLocationData:self.locationArray];
 
+
      }];
 }
 
 
--(void)addFavestoDictionary {
-   
+-(void)addFave:(UIImage *) image{
 
+    if(!([self.favoritesArray containsObject:image])){
+    [self addFavestoDictionary:image];
+    NSLog(@"FAVORITED!");
+    }
 
 }
 
+-(void)addFavestoDictionary:(UIImage *) image {
 
+    if([self checkExists:(UIImage *)image]){
+        NSLog(@"ADDED TO ARRAY!");
+    }
+    else{
+        NSLog(@"We Have To Set Up Another Queue based on new query homie");
+        NSDictionary *query = [[NSDictionary alloc] initWithObjectsAndKeys:self.favoritesArray, self.searchQuery, nil];
+        [self.favoritesMasterDictionary[@"masterFaves"] addObject:query];
+        NSLog(@"%li", [self.favoritesMasterDictionary[@"masterFaves"] count]);
+        [self.favoritesArray addObject:image];
+
+    }
+        NSArray *temp = self.favoritesMasterDictionary[@"masterFaves"];
+        NSLog(@"%li Total Favorited Queries",temp.count);
+        NSLog(@"%li Total Favorite Photos", self.favoritesArray.count);
+}
+
+-(bool)checkExists:(UIImage *)image{
+    for (NSDictionary *dict in self.favoritesMasterDictionary[@"masterFaves"]) {
+        if ([dict.allKeys containsObject:self.searchQuery]) {
+            NSLog(@"QUERY ALREADY EXISTED ADDING TO ARRAY!");
+            NSString *query = self.searchQuery;
+            [dict[query] addObject:image];
+            return YES;
+        }
+    }
+        return NO;
+}
 
 @end

@@ -39,7 +39,8 @@ UITabBarDelegate
     self.searchBar.delegate = self;
     self.tabBar.delegate = self;
     self.dataManager = [FPDataManager new];
-    self.dataManager.delegate = self; 
+    self.dataManager.delegate = self;
+    [self.dataManager setUpDataManager];
     self.pictureArray = [NSMutableArray new];
     self.locationArray = [NSMutableArray new];
     self.target = [self.storyboard instantiateViewControllerWithIdentifier:@"FavesID"];
@@ -94,8 +95,8 @@ UITabBarDelegate
     NSLog(@"You tapped me");
     ImageCollectionViewCell *cell = (ImageCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
     [cell tapToFavorite];
-    [self.dataManager.favoritesArray addObject:cell.cellImageView.image];
-    NSLog(@"%lu", self.dataManager.favoritesArray.count);
+    [self.dataManager addFave:cell.cellImageView.image];
+//    NSLog(@"%lu", self.dataManager.favoritesArray.count);
 }
 
 

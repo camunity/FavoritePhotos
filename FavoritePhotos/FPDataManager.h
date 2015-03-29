@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 @protocol FPDataManagerDelegate <NSObject>
 
@@ -31,5 +32,9 @@
 
 @property (nonatomic, assign) id <FPDataManagerDelegate> delegate;
 -(void)giveMeMyArray:(NSString *)query;
+-(void)addFave:(UIImage *)image;
+-(void)setUpDataManager;
+
+
 
 @end
