@@ -44,6 +44,22 @@ FPDataManagerDelegate
 
 }
 
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    [self.favesCollectionView deleteItemsAtIndexPaths:[NSArray arrayWithObject:indexPath]];
+}
+
+//-(void)remove:(int)i {
+//
+//    [self.favesCollectionView performBatchUpdates:^{
+//        [self.favesArray removeObjectAtIndex:i];
+//        NSIndexPath *indexPath =[NSIndexPath indexPathForRow:i inSection:0];
+//        [self.favesCollectionView deleteItemsAtIndexPaths:[NSArray arrayWithObject:indexPath]];
+//
+//    } completion:^(BOOL finished) {
+//        
+//    }];
+//}
+
 
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
