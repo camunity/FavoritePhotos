@@ -11,7 +11,7 @@
 #import "FPDataManager.h"
 #import "ViewController.h"
 
-@interface FavoritesViewController ()
+@interface FavoritesViewController () <UIAlertViewDelegate>
 
 <
 UICollectionViewDataSource,
@@ -22,7 +22,7 @@ FPDataManagerDelegate
 @property ImageCollectionViewCell *cell;
 @property (weak, nonatomic) IBOutlet UICollectionView *favesCollectionView;
 @property FPDataManager *favesManager;
-
+@property UIAlertView *deletePhotoConfirmAlert;
 @end
 
 @implementation FavoritesViewController
@@ -45,8 +45,13 @@ FPDataManagerDelegate
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    [self.favesCollectionView deleteItemsAtIndexPaths:[NSArray arrayWithObject:indexPath]];
+//    self.alertView = [UIAlertView alloc] initWithTitle:@"Alert!" message:@"Do you want to delete?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Delete", nil]
+//    [self.alertView show];
+
+
 }
+
+//-(void)collection
 
 //-(void)remove:(int)i {
 //
@@ -73,8 +78,35 @@ FPDataManagerDelegate
     return self.favesArray.count;
 }
 
+//
+//-(void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex{
+//
+//    if(alertView == self.deletePhotoConfirmAlert){
+//        if (buttonIndex == 1){
+//            //permission to delete
+//
+//            NSArray *selecetedItemsIndexPaths = [self.favesCollectionView indexPathsForSelectedItems];
+//
+//            [self deleteItemsFromDataSourceAtIndexPaths:selecetedItemsIndexPaths];
+//
+//            [self.favesCollectionView deleteItemsAtIndexPaths:selecetedItemsIndexPaths];
+//
+//        }
+//    }
+//}
 
-
+//-(void)deleteItemsFromDataSourceAtIndexPaths:(NSArray *) indexPaths{
+//
+//    NSMutableIndexSet *indexSet = [NSMutableIndexSet indexSet];
+//    for (NSIndexPath *itemPath in indexPaths) {
+//        [indexSet addIndex:itemPath.row];
+//    }
+//        //delete item from data source arrays
+//
+//        self.dataManager
+//
+//
+//}
 
 
 @end

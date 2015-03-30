@@ -44,6 +44,7 @@
              self.allPicsOnPosts = [individualPosts objectForKey:@"images"];
              self.almostThere = [self.allPicsOnPosts objectForKey:@"standard_resolution"];
              NSString *pictureURL = [self.almostThere objectForKey:@"url"];
+             //WE COULD HAVE SET UP OUR OBJECTS HERE
              [self.pictureArray addObject:pictureURL];
              if (self.pictureArray.count > 9) {
                  break;
@@ -144,6 +145,18 @@
         }
     }
            NSLog(@"Loaded!");
+}
+
+
+
+-(void)delete{
+
+
+
+}
+
+-(bool)deleteItemHelper{
+
 }
 
 
